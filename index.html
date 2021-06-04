@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Clock App</title>
+</head>
+<body>
+     <div class="app-container">
+         <div class="clock-container">
+             <div class="top-fly">
+                <div class="left-fly">
+                    <div id="year-container" class="year-container">
+                        <h3 id="month"></h3>
+                        <h3 id="day"></h3>
+                        <h3 id="year"></h3>
+                    </div>
+                    <div class="season-container"><img src="./img/fall.png" alt="" id="season"></div>
+                </div>
+                <h1 id="weekday"></h1>
+                <button id="set-location-btn"></button>
+             </div>
+
+            <div id="time-container">
+                <div class="big-time">
+                    <div id="main-time">
+                        <h2 id="hours"></h2>
+                        <h2>:</h2>
+                        <h2 id="minutes"></h2>
+                        <h2>:</h2>
+                        <h2 id="seconds"></h2>
+                    </div>
+                                <div id="loader">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <h4 class="am"> <p id="am-pm"></p><p>.m.</p> </h4>
+                    <div class="time-zone-btn">
+                        <select name="timezone" id="timezone" onchange="timeZoneChange()">
+                            <option selected class="class">Timezone</option>
+                            <option class="option" value="4">Eastern Daylight, DC</option>
+                            <option class="option" value="5">Central Daylight, Chicago</option>
+                            <option class="option" value="6">Mountain Daylight, Denver</option>
+                            <option class="option" value="7">Pacific Daylight, LA</option>
+                            <option class="option" value="8">Alaska Daylight, Alaska</option>
+                            <option class="option" value="10">Hawaii Standard, Honolulu</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="add-buttons">
+             <button id="new-clock-btn">New Clock</button>
+             <button id="set-countdown-btn">Set Countdown</button>
+        </div>
+     </div>
+     <script src="app.js"></script>
+</body>
+</html>

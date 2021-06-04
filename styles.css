@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --white: rgba(255, 255, 255, 0.87);
+}
+
+
+body {
+    background-color: rgb(31, 31, 31);
+}
+
+.app-container {
+    background-color: rgb(41, 41, 41);
+    border: 3px solid rgb(104, 0, 57);
+    border-radius: 10px;
+    padding: 30px 20px;
+    width: 80vw;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.clock-container {
+    background-color: rgb(31, 31, 31);
+    border: 2px solid rgb(131, 0, 72);
+    border-radius: 5px;
+    padding: 25px 20px 80px;
+    width: 95%;
+}
+
+.top-fly {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.year-container {
+    display: flex;
+    background: black;
+    box-shadow: -1px 1px 3px 1px black;
+    border: 2px solid rgb(131, 0, 72);
+    border-radius: 2px;
+    position: relative;
+    font-family: 'Press Start 2P';
+}
+
+.year-container:after {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    content: '';
+    top: 0;
+    left: 0;
+    background-color: rgb(255, 255, 255);
+    opacity: .01;
+}
+
+.year-container h3 {
+    padding: 0 5px;
+    border: 1px dotted black;
+    color: var(--white);
+    padding: 4px 5px;
+}
+
+.season-container {
+    height: 100%;
+    position: relative;
+    width: 50%;
+}
+
+.season-container img {
+    box-shadow: -1px 1px 3px 1px black;
+}
+
+#weekday {
+    color: var(--white);
+    font-family: 'Press Start 2P';
+}
+
+#set-location-btn {
+    width: 7%;
+    margin-right: 20px;
+    height: 7px;
+    border-radius: 4px;
+    background-color: black;
+    border: 2px solid rgb(131, 0, 72);
+    box-shadow: -.5px 1px 3px 1px black;
+}
+
+.add-buttons {
+    display: flex;
+    margin: 20px;
+    border: 2px solid rgb(131, 0, 72);
+    border-radius: 10px;
+        box-shadow: -.5px 1px 3px 1px black;
+
+}
+
+.add-buttons button {
+    width: 50%;
+    color: var(--white);
+    background-color: transparent;
+    background: rgb(31, 31, 31);
+    border: none;    
+    
+}
+
+.add-buttons button:first-of-type {
+        border-radius: 10px 0px 0px 10px;
+        border-right: 1px solid var(--white);
+
+}
+
+.add-buttons button:nth-child(2) {
+        border-radius: 0px 10px 10px 0px;
+
+}
+
+#time-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.big-time {
+    color: var(--white);
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P';
+}
+
+#main-time {
+    border: 2px solid rgb(131, 0, 72);
+    border-radius: 2px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    background: black;
+    box-shadow: -1px 1px 5px 3px black;
+    padding: 10px 10px 7px;
+}
+
+.big-time h1 {
+    padding: 0 5px;
+}
+
+.big-time .am {
+    position: absolute;
+    bottom: 0px;
+    right: -90px;
+    border: 2px solid rgb(131, 0, 72);
+    border-radius: 2px;
+    padding: 2px;
+    font-size: 1.1rem;
+    text-transform: capitalize;
+    background-color: black;
+    box-shadow: -1px 1px 3px 1px black;
+}
+
+.big-time p {
+    display: inline-block;
+    padding: 0px;
+}
+
+
+
+.time-zone-btn {
+    position: absolute;
+    bottom: -30px;
+    right: -1px;
+    border-radius: 2px;
+}
+
+.time-zone-btn select {
+    width: 100%;
+    background-color: black;
+    color: var(--white);
+    border-radius: 5px;
+    border: 1px solid rgb(131, 0, 72);
+    box-shadow: -1px 1px 3px 1px black;
+}
+
+#loader {
+    display: flex;
+}
+
+#loader div{
+    height: 20px;
+    width: 20px;
+    margin: 10px 15px;
+    border-radius: 50%;
+    background-color: black;
+    border: 2px solid rgb(131, 0, 72);
+    animation: bounce 1.3s ease-in infinite;
+}
+
+#loader div:nth-of-type(2) {
+    animation-delay: .2s;
+}
+
+#loader div:nth-of-type(3) {
+    animation-delay: .4s;
+}
+
+@keyframes bounce {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
