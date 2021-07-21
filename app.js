@@ -8,16 +8,56 @@ let ampm = document.getElementById("am-pm");
 let mainTime = document.getElementById("main-time");
 const loader = document.getElementById("loader");
 const timeZoneSelect = document.getElementById("timezone");
-let options = Array.from(document.querySelectorAll(".option"));
-const locationBtn = document.getElementById("set-location-btn");
-const newClockBtn = document.getElementById("new-clock-btn");
-const setCountBtn = document.getElementById("set-countdown-btn");
+let timezoneOptions = Array.from(document.querySelectorAll(".timezone-option"));
+const locationModal = document.getElementById("location-modal");
+const locationBtn = document.getElementById("location-btn");
+const locationEl = document.getElementById("location");
+const locationCloseBtn = document.getElementById("location-close-btn");
+const locationForm = document.getElementById("loc-form");
+const countdownModal = document.getElementById("countdown-modal");
+const countdownBtn = document.getElementById("set-countdown-btn");
+const countdownCloseBtn = document.getElementById("countdown-close-btn");
+const countdownForm = document.getElementById("countdown-form");
+
 const date = new Date();
 let hourData = +date.getHours();
 let minuteData = +date.getMinutes();
 let day = date.getDay();
+
+//Open Location Interface
+function openLocation() {
+  locationModal.classList.remove("closed");
+  locationModal.classList.add("show");
+  locationCloseBtn.classList.add("show");
+}
+
+function closeLocation() {
+  locationModal.classList.add("closed");
+  locationModal.classList.remove("show");
+  locationCloseBtn.classList.remove("show");
+}
+
+//Submit Location Input
+function locationSubmit(e) {
+  e.preventDefault();
+  const locationInput = document.getElementById("location-input");
+  const userLocation = locationInput.value;
+  locationInput.value = "";
+  locationEl.innerHTML = userLocation;
+  localStorage.setItem("location", `${userLocation}`);
+  closeLocation();
+}
+
+//Check Local Storage for Initial Location
+function setLocation() {
+  if (localStorage.getItem("location")) {
+    locationEl.innerHTML = localStorage.getItem("location");
+  }
+}
+
+//Set initial timezone
 function setTimeZone() {
-  options.forEach((option) => {
+  timezoneOptions.forEach((option) => {
     option.selected = false;
     let diff = date.getTimezoneOffset() / 60;
     if (diff === +option.value) {
@@ -26,10 +66,11 @@ function setTimeZone() {
   });
 }
 
+//Calculate new time on timezone change
 function timeZoneChange() {
   let uniTime = date.getUTCHours();
 
-  options.forEach((option) => {
+  timezoneOptions.forEach((option) => {
     if (option.selected === true) {
       let diff = uniTime - option.value;
       if (diff < 0) {
@@ -41,6 +82,7 @@ function timeZoneChange() {
   });
 }
 
+//Manage Time Data
 function getTime(hour = hourData, minute = minuteData) {
   let hourLength;
   let minuteLength = minute.toString().length;
@@ -83,10 +125,12 @@ function getTime(hour = hourData, minute = minuteData) {
   minutes.innerHTML = minuteText;
 }
 
+//Loader
 setTimeout(function () {
   mainTime.style.display = "flex";
   loader.style.display = "none";
 }, 3000);
+
 //Get and Start Second Count
 window.setInterval(
   (function () {
@@ -109,10 +153,12 @@ window.setInterval(
   1000
 );
 
+//Push Minutes after 60 seconds
 function minute() {
   let minuteData = +minutes.innerHTML + 1;
   let hourData = +hours.innerHTML;
 
+  //account for AM PM Hours
   if (ampm.innerHTML === "P") {
     hourData += 12;
   }
@@ -124,6 +170,7 @@ function minute() {
   }
   getTime(hourData, minuteData);
 }
+
 //Get Weekday
 function getWeekDay(dayNum = day) {
   switch (dayNum) {
@@ -151,7 +198,7 @@ function getWeekDay(dayNum = day) {
 
   document.getElementById("weekday").innerHTML = dayNum;
 }
-getWeekDay();
+
 //Get Season
 function getSeason() {
   let monthNum = date.getMonth() + 1;
@@ -166,8 +213,114 @@ function getSeason() {
   }
 }
 
+//Event Listeners
+locationBtn.addEventListener("click", openLocation);
+locationCloseBtn.addEventListener("click", closeLocation);
+locationForm.addEventListener("submit", locationSubmit);
+countdownBtn.addEventListener("click", openCountdown);
+countdownCloseBtn.addEventListener("click", closeCountdown);
+countdownForm.addEventListener("submit", countdownFormSubmit);
+
+function openCountdown() {
+  countdownModal.classList.remove("closed");
+  countdownModal.classList.add("show");
+  countdownCloseBtn.classList.add("show");
+}
+function closeCountdown() {
+  countdownModal.classList.add("closed");
+  countdownModal.classList.remove("show");
+  countdownCloseBtn.classList.remove("show");
+}
+
+function countdownFormSubmit(e) {
+  e.preventDefault();
+  const eventInput = document.getElementById("event-input").value;
+  const dayInput = document.getElementById("day-input").value;
+  const timeInput = document.getElementById("time-input").value;
+  const monthSelect = document.getElementById("month-select").value;
+  const ampmSelect = document.getElementById("am-pm-select").value;
+  var newTime = +timeInput + +ampmSelect;
+  if (newTime.length === 1) {
+    var countdownTime = `0${newTime}`;
+  } else {
+    countdownTime = newTime;
+  }
+  let timeZone = timeZoneSelect.value;
+  countdownDate = `${monthSelect} ${dayInput} 2021 ${countdownTime}:00:00 GMT-${timeZone}`;
+  localStorage.setItem("Countdown Date", ` ${countdownDate}`);
+  localStorage.setItem("Event Name", `${eventInput}`);
+  formatCountdown(countdownDate, eventInput);
+  closeCountdown();
+}
+
+//Format Countdown Data
+function formatCountdown(countdownData, name) {
+  let meta = Date.parse(countdownData);
+  let t = date.getTime();
+
+  //Get TIme Difference
+  let countdownTime = meta - t;
+  ``;
+  //Math Numbers
+  let d = Math.trunc(countdownTime / 1000 / 60 / 60 / 24);
+  let h = (Math.trunc(countdownTime / 1000 / 60 / 60) % 24).toString();
+  let m = Math.trunc((countdownTime / 1000 / 60) % 60).toString();
+  let s = Math.trunc((countdownTime / 1000) % 60).toString();
+
+  //Format Numbers
+  if (d === 1) {
+    var days = `${d} Day-`;
+  } else {
+    var days = `${d} Days-`;
+  }
+
+  if (h.length === 1) {
+    var hours = `0${h}`;
+  } else {
+    var hours = h;
+  }
+
+  if (m.length === 1) {
+    var minutes = `0${m}`;
+  } else {
+    var minutes = m;
+  }
+
+  if (s.length === 1) {
+    var seconds = `0${s}`;
+  } else {
+    var seconds = s;
+  }
+
+  initCountdown(days, hours, minutes, seconds, name);
+}
+
+function setEvent() {
+  console.log(123);
+  if (
+    localStorage.getItem("Countdown Date") &&
+    localStorage.getItem("Event Name")
+  ) {
+    console.log(111);
+    var date = localStorage.getItem("Countdown Date");
+    var name = localStorage.getItem("Event Name");
+    formatCountdown(date, name);
+  }
+}
+
+//Init Countdown
+function initCountdown(days, hours, minutes, seconds, name) {
+  document.getElementById("countdown-days").innerHTML = days;
+  document.getElementById("countdown-hours").innerHTML = hours;
+  document.getElementById("countdown-minutes").innerHTML = minutes;
+  document.getElementById("countdown-seconds").innerHTML = seconds;
+  document.getElementById("countdown-event").innerHTML = name;
+}
+
+//Initial Calls
+setEvent();
+setLocation();
+getWeekDay();
 getSeason();
 getTime(hourData, minuteData);
 setTimeZone();
-
-//Event Listeners

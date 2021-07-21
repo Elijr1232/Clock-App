@@ -28,7 +28,7 @@ body {
     align-items: center;
 }
 
-.clock-container {
+#clock-container {
     background-color: rgb(31, 31, 31);
     border: 2px solid rgb(131, 0, 72);
     border-radius: 5px;
@@ -42,6 +42,73 @@ body {
     align-items: center;
     padding: 20px 0;
     text-align: center;
+}
+
+.mid-fly {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.location-modal-container {
+    position: relative;
+    margin: auto;
+    background-color: black;
+    border: 2px solid rgb(131, 0, 72);
+    border-radius: 5px;
+    width: 100%;
+    padding: 20px 20px 10px;
+}
+
+#loc-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.location-modal-container button {
+    margin: 10px;
+    background-color: black;
+    border: 2px solid rgb(131, 0, 72);
+    color: white;
+    font-family: 'Press Start 2P';
+    padding: 5px;
+    border-radius: 5px;
+    font-size: .6rem;
+}
+
+.location-modal-container label {
+    color: white;
+    font-family: 'Press Start 2P';
+    font-size: .8rem;
+    margin-bottom: 3px;
+}
+
+#location-modal.closed {
+    display: none;
+}
+
+.location-modal-container input:focus {
+    outline: none;
+}
+
+#location-close-btn {
+    display: none;
+    position: absolute;
+    top: 7%;
+    right: 3%;
+    color: white;
+    z-index: 5;
+    font-size: .8rem;
+    font-family: 'Press Start 2P';
+    cursor: pointer;
+}
+
+#location-close-btn.show {
+    display: block;
 }
 
 .year-container {
@@ -87,7 +154,7 @@ body {
     font-family: 'Press Start 2P';
 }
 
-#set-location-btn {
+#location-btn {
     width: 7%;
     margin-right: 20px;
     height: 7px;
@@ -95,41 +162,82 @@ body {
     background-color: black;
     border: 2px solid rgb(131, 0, 72);
     box-shadow: -.5px 1px 3px 1px black;
+    cursor: pointer;
+}
+
+#location-btn:active {
+    transform: scale(.9);
+}
+
+#location {
+    color: white;
+    font-family: 'Press Start 2P';
+    text-align: center;
 }
 
 .add-buttons {
     display: flex;
+    justify-content: center;
     margin: 20px;
     border: 2px solid rgb(131, 0, 72);
     border-radius: 10px;
-        box-shadow: -.5px 1px 3px 1px black;
-
+    box-shadow: -.5px 1px 3px 1px black;
 }
 
 .add-buttons button {
-    width: 50%;
+    width: 100%;
     color: var(--white);
-    background-color: transparent;
-    background: rgb(31, 31, 31);
-    border: none;    
-    
-}
-
-.add-buttons button:first-of-type {
-        border-radius: 10px 0px 0px 10px;
-        border-right: 1px solid var(--white);
-
-}
-
-.add-buttons button:nth-child(2) {
-        border-radius: 0px 10px 10px 0px;
-
+    background: black;
+    border: none;   
+    padding: 10px; 
+    border-radius: 10px;
+    font-family: 'Press Start 2P';
 }
 
 #time-container {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#countdown-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+h2 {
+    font-size: 2.7rem;
+    color: var(--white);
+    font-family: 'Press Start 2P';
+}
+
+#countdown-event {
+    margin-bottom: .8rem;
+}
+
+#countdown-time {
+    border: 2px solid rgb(131, 0, 72);
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    background: black;
+    box-shadow: -1px 1px 5px 3px black;
+    padding: 10px 10px 7px;
+    height: 100%;
+}
+
+.countdown-big-time {
+    color: var(--white);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    font-family: 'Press Start 2P';
 }
 
 .big-time {
@@ -140,6 +248,7 @@ body {
     justify-content: center;
     font-family: 'Press Start 2P';
 }
+
 
 #main-time {
     border: 2px solid rgb(131, 0, 72);
@@ -174,8 +283,6 @@ body {
     display: inline-block;
     padding: 0px;
 }
-
-
 
 .time-zone-btn {
     position: absolute;
@@ -213,6 +320,82 @@ body {
 
 #loader div:nth-of-type(3) {
     animation-delay: .4s;
+}
+
+#countdown-modal.show {
+    transform: scale(1);
+    transition: all .5s ease;
+}
+
+.countdown-modal-container {
+    position: fixed;
+    bottom: -80px;
+    left: -150px;
+    background-color: black;
+    border: 2px solid rgb(131, 0, 72);
+    border-radius: 5px;
+    width: 100%;
+    min-width: 300px;
+    padding: 20px 20px 10px;
+    color: white;
+    font-family: "Press Start 2P";
+}
+
+#countdown-modal.closed {
+transform: scale(0);}
+
+#countdown-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.countdown-modal-container label {
+    margin-bottom: 7px;
+}
+
+#countdown-close-btn {
+    position: relative;
+    top: 3%;
+    left: 97%;
+}
+
+.countdown-modal-container input,
+.countdown-modal-container select {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.countdown-modal-container h3 {
+    margin: 10px 0;
+}
+
+.countdown-modal-container button {
+    background-color: black;
+    border: 2px solid rgb(131, 0, 72);
+    color: white;
+    font-family: 'Press Start 2P';
+    padding: 5px;
+    border-radius: 5px;
+    font-size: .6rem;
+}
+
+.month-day, .time-am {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.month-column, .time-column, .day-column, .am-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.month-column, .time-column {
+        margin-right: 10px;
 }
 
 @keyframes bounce {
