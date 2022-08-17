@@ -1,0 +1,1 @@
+Clock App does everything you would expect from a clock. It keeps track of your local time, but it also allows the user to change timezones to for anywhere in the US. It was a bit of a nuisance to develop, this was in my beginning stages, but I hammered through it and got familiar with the JavaScript Date Object in the process.
